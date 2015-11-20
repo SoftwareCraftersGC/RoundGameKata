@@ -1,4 +1,8 @@
-﻿using NUnit.Framework;
+﻿using FluentAssertions;
+using NSubstitute;
+using NUnit.Framework;
+using RoundGame;
+
 
 namespace Tests
 {
@@ -26,6 +30,51 @@ namespace Tests
 	[TestFixture]
 	public class GameStartShould
 	{
+		[Test]
+		public void no_points_are_added_if_first_card_is_not_an_ace()
+		{
+			var deck = Substitute.For<Deck>();
+			deck.GetRandomCard().Returns(new Card(Suit.Spades, Value.Two));
 
+			var table = new Table();
+			var tableCardDealer = new TableCardDealer(table, deck);
+			tableCardDealer.PutCard();
+
+			tableCardDealer.GetPoints().Should().Be(0);
+		}
+	}
+
+	public class TableCardDealer
+	{
+		private readonly Table _table;
+		private readonly Deck _deck;
+
+		public TableCardDealer(Table table, Deck deck)
+		{
+			_table = table;
+			_deck = deck;
+		}
+
+		public void PutCard()
+		{
+			
+		}
+
+		public int GetPoints()
+		{
+			return 0;
+		}
+	}
+
+	public class Table
+	{
+	}
+
+	public class Deck
+	{
+		public virtual Card GetRandomCard()
+		{
+			return null;
+		}
 	}
 }
