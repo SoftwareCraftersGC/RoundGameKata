@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System.Collections.Generic;
+using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
 using RoundGame;
@@ -48,26 +49,39 @@ namespace Tests
 	{
 		private readonly Table _table;
 		private readonly Deck _deck;
+		private int _pointsToBeAdded;
 
 		public TableCardDealer(Table table, Deck deck)
 		{
 			_table = table;
 			_deck = deck;
+			_pointsToBeAdded = 0;
 		}
 
 		public void PutCard()
 		{
-			
+			_table.AddCard(_deck.GetRandomCard());
 		}
 
 		public int GetPoints()
 		{
-			return 0;
+			return _pointsToBeAdded;
 		}
 	}
 
 	public class Table
 	{
+		public List<Card> Cards { get; }
+
+		public Table()
+		{
+			Cards = new List<Card>();
+		}
+
+		public void AddCard(Card card)
+		{
+			Cards.Add(card);
+		}
 	}
 
 	public class Deck
