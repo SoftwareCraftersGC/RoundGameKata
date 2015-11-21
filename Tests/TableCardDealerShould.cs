@@ -35,7 +35,7 @@ namespace Tests
 		public void add_no_points_if_first_card_is_not_an_ace()
 		{
 			var deck = Substitute.For<Deck>();
-			deck.GetRandomCard().Returns(new Card(Suit.Spades, Value.Two));
+			deck.GetRandomCard().Returns(new Card(Suit.Spades, Value.King));
 
 			var table = new Table();
 			var tableCardDealer = new TableCardDealer(table, deck);
@@ -57,7 +57,18 @@ namespace Tests
 			tableCardDealer.GetPoints().Should().Be(1);
 		}
 
-		
+		[Test]
+		public void add_two_points_if_second_card_value_is_two()
+		{
+			var deck = Substitute.For<Deck>();
+			deck.GetRandomCard().Returns(new Card(Suit.Spades, Value.King), new Card(Suit.Spades, Value.Two));
+
+			var table = new Table();
+			var tableCardDealer = new TableCardDealer(table, deck);
+			tableCardDealer.PutCard();
+
+			tableCardDealer.GetPoints().Should().Be(2);
+		}
 	}
 
 	public class TableCardDealer
@@ -76,7 +87,9 @@ namespace Tests
 		public void PutCard()
 		{
 			_table.AddCard(_deck.GetRandomCard());
+			_table.AddCard(_deck.GetRandomCard());
 			if (_table.Cards[0].Value == Value.Ace) _pointsToBeAdded += 1;
+			if (_table.Cards[1].Value == Value.Two) _pointsToBeAdded += 2;
 		}
 
 		public int GetPoints()
