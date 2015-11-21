@@ -41,7 +41,7 @@ namespace Tests
 
 			var table = new Table();
 			var tableCardDealer = new TableCardDealer(table, deck);
-			tableCardDealer.PutCard();
+			tableCardDealer.PutCards();
 
 			tableCardDealer.GetPoints().Should().Be(0);
 		}
@@ -54,7 +54,7 @@ namespace Tests
 
 			var table = new Table();
 			var tableCardDealer = new TableCardDealer(table, deck);
-			tableCardDealer.PutCard();
+			tableCardDealer.PutCards();
 
 			tableCardDealer.GetPoints().Should().Be(1);
 		}
@@ -67,7 +67,7 @@ namespace Tests
 
 			var table = new Table();
 			var tableCardDealer = new TableCardDealer(table, deck);
-			tableCardDealer.PutCard();
+			tableCardDealer.PutCards();
 
 			tableCardDealer.GetPoints().Should().Be(2);
 		}
@@ -87,7 +87,7 @@ namespace Tests
 			_pointsToBeAdded = 0;
 		}
 
-		public void PutCard()
+		public void PutCards()
 		{
 			var values = Enum.GetValues(typeof (Value)).Cast<Value>().ToList();
 			for (int i = 0; i < MaxCardsOnTable; i++)
