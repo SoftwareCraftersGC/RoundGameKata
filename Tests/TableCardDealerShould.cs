@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
@@ -73,6 +75,7 @@ namespace Tests
 
 	public class TableCardDealer
 	{
+		private const int MaxCardsOnTable = 4;
 		private readonly Table _table;
 		private readonly Deck _deck;
 		private int _pointsToBeAdded;
@@ -86,11 +89,14 @@ namespace Tests
 
 		public void PutCard()
 		{
-			_table.AddCard(_deck.GetRandomCard());
-			_table.AddCard(_deck.GetRandomCard());
-			if (_table.Cards[0].Value == Value.Ace) _pointsToBeAdded += 1;
-			if (_table.Cards[1].Value == Value.Two) _pointsToBeAdded += 2;
+			var values = Enum.GetValues(typeof (Value)).Cast<Value>().ToList();
+			for (int i = 0; i < MaxCardsOnTable; i++)
+			{
+				_table.AddCard(_deck.GetRandomCard());
+				if (_table.Cards[i].Value == values[i]) _pointsToBeAdded += (int) values[i];
+			}
 		}
+
 
 		public int GetPoints()
 		{
