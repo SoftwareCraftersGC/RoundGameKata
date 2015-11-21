@@ -29,10 +29,10 @@ namespace Tests
 	*/
 
 	[TestFixture]
-	public class GameStartShould
+	public class TableCardDealerShould
 	{
 		[Test]
-		public void no_points_are_added_if_first_card_is_not_an_ace()
+		public void add_no_points_if_first_card_is_not_an_ace()
 		{
 			var deck = Substitute.For<Deck>();
 			deck.GetRandomCard().Returns(new Card(Suit.Spades, Value.Two));
@@ -43,6 +43,21 @@ namespace Tests
 
 			tableCardDealer.GetPoints().Should().Be(0);
 		}
+
+		[Test]
+		public void add_one_point_when_an_ace_is_the_first_card_on_the_table()
+		{
+			var deck = Substitute.For<Deck>();
+			deck.GetRandomCard().Returns(new Card(Suit.Spades, Value.Ace));
+
+			var table = new Table();
+			var tableCardDealer = new TableCardDealer(table, deck);
+			tableCardDealer.PutCard();
+
+			tableCardDealer.GetPoints().Should().Be(1);
+		}
+
+		
 	}
 
 	public class TableCardDealer
@@ -61,6 +76,7 @@ namespace Tests
 		public void PutCard()
 		{
 			_table.AddCard(_deck.GetRandomCard());
+			if (_table.Cards[0].Value == Value.Ace) _pointsToBeAdded += 1;
 		}
 
 		public int GetPoints()
