@@ -33,43 +33,57 @@ namespace Tests
 	[TestFixture]
 	public class TableCardDealerShould
 	{
+		private TableCardDealer _tableCardDealer;
+		private Table _table;
+		private Deck _deck;
+
+		[SetUp]
+		public void Initialize()
+		{
+			_deck = Substitute.For<Deck>();
+			_table = new Table();
+			_tableCardDealer = new TableCardDealer(_table, _deck);
+		}
+
 		[Test]
 		public void add_no_points_if_first_card_is_not_an_ace()
 		{
-			var deck = Substitute.For<Deck>();
-			deck.GetRandomCard().Returns(new Card(Suit.Spades, Value.King));
+			GivenATableWithNoCardsMatchingPositionValue();
 
-			var table = new Table();
-			var tableCardDealer = new TableCardDealer(table, deck);
-			tableCardDealer.PutCards();
-
-			tableCardDealer.GetPoints().Should().Be(0);
+			_tableCardDealer.GetPoints().Should().Be(0);
 		}
 
 		[Test]
 		public void add_one_point_when_an_ace_is_the_first_card_on_the_table()
 		{
-			var deck = Substitute.For<Deck>();
-			deck.GetRandomCard().Returns(new Card(Suit.Spades, Value.Ace));
-
-			var table = new Table();
-			var tableCardDealer = new TableCardDealer(table, deck);
-			tableCardDealer.PutCards();
-
-			tableCardDealer.GetPoints().Should().Be(1);
+			GivenATableWithTheFirstCardBeingAnAce();
+			_tableCardDealer.GetPoints().Should().Be(1);
 		}
 
 		[Test]
 		public void add_two_points_if_second_card_value_is_two()
 		{
-			var deck = Substitute.For<Deck>();
-			deck.GetRandomCard().Returns(new Card(Suit.Spades, Value.King), new Card(Suit.Spades, Value.Two));
+			GivenATableWhereTheSecondValueCardMatchesWithThePosition();
+			_tableCardDealer.GetPoints().Should().Be(2);
+		}
 
-			var table = new Table();
-			var tableCardDealer = new TableCardDealer(table, deck);
-			tableCardDealer.PutCards();
+		private void GivenATableWithTheFirstCardBeingAnAce()
+		{
+			_deck.GetRandomCard().Returns(new Card(Suit.Spades, Value.Ace));
+			_tableCardDealer.PutCards();
 
-			tableCardDealer.GetPoints().Should().Be(2);
+		}
+
+		private void GivenATableWithNoCardsMatchingPositionValue()
+		{
+			_deck.GetRandomCard().Returns(new Card(Suit.Spades, Value.King));
+			_tableCardDealer.PutCards();
+		}
+
+		private void GivenATableWhereTheSecondValueCardMatchesWithThePosition()
+		{
+			_deck.GetRandomCard().Returns(new Card(Suit.Spades, Value.King), new Card(Suit.Spades, Value.Two));
+			_tableCardDealer.PutCards();
 		}
 	}
 
