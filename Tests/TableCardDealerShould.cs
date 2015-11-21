@@ -49,7 +49,6 @@ namespace Tests
 		public void add_no_points_if_first_card_is_not_an_ace()
 		{
 			GivenATableWithNoCardsMatchingPositionValue();
-
 			_tableCardDealer.GetPoints().Should().Be(0);
 		}
 
