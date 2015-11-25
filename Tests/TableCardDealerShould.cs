@@ -46,9 +46,9 @@ namespace Tests
 		}
 
 		[Test]
-		public void add_no_points_if_first_card_is_not_an_ace()
+		public void add_no_points_when_the_first_card_value_is_not_an_ace()
 		{
-			GivenATableWithNoCardsMatchingPositionValue();
+			GivenATableWithTheFirstCardNotBeingAnAce();
 			_tableCardDealer.GetPoints().Should().Be(0);
 		}
 
@@ -89,7 +89,7 @@ namespace Tests
 
 		}
 
-		private void GivenATableWithNoCardsMatchingPositionValue()
+		private void GivenATableWithTheFirstCardNotBeingAnAce()
 		{
 			_deck.GetRandomCard().Returns(new Card(Suit.Spades, Value.King));
 			_tableCardDealer.PutCards();
