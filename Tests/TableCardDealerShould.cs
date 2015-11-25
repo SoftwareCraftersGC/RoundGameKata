@@ -118,7 +118,7 @@ namespace Tests
 
 		public void PutCards()
 		{
-			var values = Enum.GetValues(typeof (Value)).Cast<Value>().ToList();
+			var values = cardValues();
 			for (int i = 0; i < MaxCardsOnTable; i++)
 			{
 				_table.AddCard(_deck.GetRandomCard());
@@ -128,6 +128,10 @@ namespace Tests
 			if (NoCardsAreRepeated()) _pointsToBeAdded += 1;
 		}
 
+		private static List<Value> cardValues()
+		{
+			return Enum.GetValues(typeof (Value)).Cast<Value>().ToList();
+		}
 
 		private bool NoCardsAreRepeated()
 		{
