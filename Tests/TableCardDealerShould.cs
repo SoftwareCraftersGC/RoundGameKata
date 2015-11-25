@@ -46,27 +46,6 @@ namespace Tests
 		}
 
 		[Test]
-		public void add_no_points_when_the_first_card_value_is_not_an_ace()
-		{
-			GivenATableWithTheFirstCardNotBeingAnAce();
-			_tableCardDealer.GetPoints().Should().Be(0);
-		}
-
-		[Test]
-		public void add_one_point_when_an_ace_is_the_first_card_on_the_table()
-		{
-			GivenATableWithTheFirstCardBeingAnAce();
-			_tableCardDealer.GetPoints().Should().Be(1);
-		}
-
-		[Test]
-		public void add_two_points_if_second_card_value_is_two()
-		{
-			GivenATableWhereTheSecondValueCardMatchesWithThePosition();
-			_tableCardDealer.GetPoints().Should().Be(2);
-		}
-
-		[Test]
 		public void add_a_point_when_no_card_is_repeated_over_the_table()
 		{
 			_deck.GetRandomCard().Returns(new Card(Suit.Spades, Value.King),
@@ -79,27 +58,21 @@ namespace Tests
 			_tableCardDealer.GetPoints().Should().Be(1);
 		}
 
+		[Test]
+		public void add_points_based_on_card_value_if_the_value_corresponds_to_its_emplacement_order_and_an_extra_one_for_no_repeated_cards()
+		{
+			_deck.GetRandomCard().Returns(new Card(Suit.Spades, Value.Ace),
+										  new Card(Suit.Spades, Value.Two),
+										  new Card(Suit.Spades, Value.Three),
+										  new Card(Suit.Spades, Value.Four));
+
+			_tableCardDealer.PutCards();
+
+			_tableCardDealer.GetPoints().Should().Be(11);
+		}
+
 		// TODO implement a test for Card equality based on Value only
 		// in class CardShould
-
-		private void GivenATableWithTheFirstCardBeingAnAce()
-		{
-			_deck.GetRandomCard().Returns(new Card(Suit.Spades, Value.Ace));
-			_tableCardDealer.PutCards();
-
-		}
-
-		private void GivenATableWithTheFirstCardNotBeingAnAce()
-		{
-			_deck.GetRandomCard().Returns(new Card(Suit.Spades, Value.King));
-			_tableCardDealer.PutCards();
-		}
-
-		private void GivenATableWhereTheSecondValueCardMatchesWithThePosition()
-		{
-			_deck.GetRandomCard().Returns(new Card(Suit.Spades, Value.King), new Card(Suit.Spades, Value.Two));
-			_tableCardDealer.PutCards();
-		}
 	}
 
 	public class TableCardDealer
