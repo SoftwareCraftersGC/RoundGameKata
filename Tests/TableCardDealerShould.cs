@@ -66,6 +66,22 @@ namespace Tests
 			_tableCardDealer.GetPoints().Should().Be(2);
 		}
 
+		[Test]
+		public void add_a_point_when_no_card_is_repeated_over_the_table()
+		{
+			_deck.GetRandomCard().Returns(new Card(Suit.Spades, Value.King),
+										  new Card(Suit.Spades, Value.Queen),
+										  new Card(Suit.Spades, Value.Knave),
+										  new Card(Suit.Spades, Value.Seven));
+
+			_tableCardDealer.PutCards();
+
+			_tableCardDealer.GetPoints().Should().Be(1);
+		}
+
+		// TODO implement a test for Card equality based on Value only
+		// in class CardShould
+
 		private void GivenATableWithTheFirstCardBeingAnAce()
 		{
 			_deck.GetRandomCard().Returns(new Card(Suit.Spades, Value.Ace));
@@ -108,6 +124,23 @@ namespace Tests
 				_table.AddCard(_deck.GetRandomCard());
 				if (_table.Cards[i].Value == values[i]) _pointsToBeAdded += (int) values[i];
 			}
+
+			if (NoCardsAreRepeated()) _pointsToBeAdded += 1;
+		}
+
+
+		private bool NoCardsAreRepeated()
+		{
+			var previousCard = _table.Cards[0];
+
+			for (var i = 1; i < _table.Cards.Count; i++)
+			{
+				var currentCard = _table.Cards[i];
+				if (previousCard.Equals(currentCard)) return false;
+				previousCard = currentCard;
+			}
+
+			return true;
 		}
 
 
