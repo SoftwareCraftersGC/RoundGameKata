@@ -20,33 +20,41 @@ namespace RoundGame
 
         public void PutCards()
         {
-            var values = cardValues();
-            for (int i = 0; i < MaxCardsOnTable; i++)
+            var values = CardValues();
+            for (var i = 0; i < MaxCardsOnTable; i++)
             {
                 _table.AddCard(_deck.GetRandomCard());
                 if (_table.Cards[i].Value == values[i]) _pointsToBeAdded += (int) values[i];
             }
 
             if (NoCardsAreRepeated()) _pointsToBeAdded += 1;
+            else ReplaceRepeatedCards();
         }
 
-        private static List<Value> cardValues()
+        private void ReplaceRepeatedCards()
+        {
+            _table.Cards[3] = _deck.GetRandomCard();
+        }
+
+        private static List<Value> CardValues()
         {
             return Enum.GetValues(typeof (Value)).Cast<Value>().ToList();
         }
 
+        private bool CardsAreRepeated()
+        {
+            foreach (var currentCard in _table.Cards)
+            {
+                var repeated = 0;
+                repeated += _table.Cards.Count(t => currentCard.Equals(t));
+                if (repeated > 1) return true;
+            }
+            return false;
+        }
+
         private bool NoCardsAreRepeated()
         {
-            var previousCard = _table.Cards[0];
-
-            for (var i = 1; i < _table.Cards.Count; i++)
-            {
-                var currentCard = _table.Cards[i];
-                if (previousCard.Equals(currentCard)) return false;
-                previousCard = currentCard;
-            }
-
-            return true;
+            return !CardsAreRepeated();
         }
 
 
