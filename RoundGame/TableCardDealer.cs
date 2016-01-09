@@ -28,12 +28,25 @@ namespace RoundGame
             }
 
             if (NoCardsAreRepeated()) _pointsToBeAdded += 1;
-            else ReplaceRepeatedCards();
+            else
+            {
+                while (CardsAreRepeated()) ReplaceRepeatedCards();
+            }
         }
 
         private void ReplaceRepeatedCards()
         {
-            _table.Cards[3] = _deck.GetRandomCard();
+            for (var j = 0; j < _table.Cards.Count; j++)
+            {
+                var card = _table.Cards[j];
+                var repeated = 0;
+                for (var i = 0; i < _table.Cards.Count; i++)
+                {
+                    if (card.Equals(_table.Cards[i])) repeated += repeated == 1 ? 2 : 1;
+                    if (repeated > 1) _table.Cards[i] = _deck.GetRandomCard();
+                }
+
+            }
         }
 
         private static List<Value> CardValues()
