@@ -33,12 +33,14 @@ namespace RoundGame
 
         private void ReplaceRepeatedCards()
         {
-            
-                for (var cardPos = _table.Cards.Count - 1; cardPos >= 0; cardPos--)
+            while (CardsAreRepeated())
+            {
+                for (var cardPos = 0; cardPos < _table.Cards.Count; cardPos++)
                 {
                     var card = GetCardAt(cardPos);
-                    if (IsRepeated(card, cardPos)) ReplaceRepeatedCardAt(cardPos);
+                    ReplaceRepeated(card, cardPos);
                 }
+            }
         }
 
         private Card GetCardAt(int cardPos)
@@ -46,13 +48,12 @@ namespace RoundGame
             return _table.Cards[cardPos];
         }
 
-        private bool IsRepeated(Card card, int cardPos)
+        private void ReplaceRepeated(Card card, int cardPos)
         {
-            for (var i = 0; i < cardPos; i++)
+            for (var i = cardPos +1; i < _table.Cards.Count; i++)
             {
-                if (card.Equals(_table.Cards[i])) return true;
+                if (card.Equals(_table.Cards[i])) ReplaceRepeatedCardAt(i);
             }
-            return false;
         }
 
         private void ReplaceRepeatedCardAt(int i)
