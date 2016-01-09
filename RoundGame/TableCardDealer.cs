@@ -68,13 +68,8 @@ namespace RoundGame
 
         private bool CardsAreRepeated()
         {
-            foreach (var currentCard in _table.Cards)
-            {
-                var repeated = 0;
-                repeated += _table.Cards.Count(t => currentCard.Equals(t));
-                if (repeated > 1) return true;
-            }
-            return false;
+            return _table.Cards.GroupBy(card => card)
+                               .Any(group => group.Count() > 1);
         }
 
         private bool NoCardsAreRepeated()
