@@ -7,15 +7,15 @@ namespace RoundGame
     public class TableCardDealer
     {
         private const int MaxCardsOnTable = 4;
-        private readonly Table _table;
-        private readonly Deck _deck;
-        private int _pointsToBeAdded;
+        private Table Table { get; }
+        private Deck Deck { get; }
+        private int PointsToBeAdded { get; set; }
 
         public TableCardDealer(Table table, Deck deck)
         {
-            _table = table;
-            _deck = deck;
-            _pointsToBeAdded = 0;
+            Table = table;
+            Deck = deck;
+            PointsToBeAdded = 0;
         }
 
         public void PutCards()
@@ -23,11 +23,11 @@ namespace RoundGame
             var values = CardValues();
             for (var i = 0; i < MaxCardsOnTable; i++)
             {
-                _table.AddCard(_deck.GetRandomCard());
-                if (_table.Cards[i].Value == values[i]) _pointsToBeAdded += (int) values[i];
+                Table.AddCard(Deck.GetRandomCard());
+                if (Table.Cards[i].Value == values[i]) PointsToBeAdded += (int) values[i];
             }
 
-            if (NoCardsAreRepeated()) _pointsToBeAdded += 1;
+            if (NoCardsAreRepeated()) PointsToBeAdded += 1;
             else ReplaceRepeatedCards();
         }
 
@@ -35,7 +35,7 @@ namespace RoundGame
         {
             while (CardsAreRepeated())
             {
-                for (var cardPos = 0; cardPos < _table.Cards.Count; cardPos++)
+                for (var cardPos = 0; cardPos < Table.Cards.Count; cardPos++)
                 {
                     var card = GetCardAt(cardPos);
                     ReplaceRepeated(card, cardPos);
@@ -45,20 +45,20 @@ namespace RoundGame
 
         private Card GetCardAt(int cardPos)
         {
-            return _table.Cards[cardPos];
+            return Table.Cards[cardPos];
         }
 
         private void ReplaceRepeated(Card card, int cardPos)
         {
-            for (var i = cardPos +1; i < _table.Cards.Count; i++)
+            for (var i = cardPos +1; i < Table.Cards.Count; i++)
             {
-                if (card.Equals(_table.Cards[i])) ReplaceRepeatedCardAt(i);
+                if (card.Equals(Table.Cards[i])) ReplaceRepeatedCardAt(i);
             }
         }
 
         private void ReplaceRepeatedCardAt(int i)
         {
-            _table.Cards[i] = _deck.GetRandomCard();
+            Table.Cards[i] = Deck.GetRandomCard();
         }
 
         private static List<Value> CardValues()
@@ -68,7 +68,7 @@ namespace RoundGame
 
         private bool CardsAreRepeated()
         {
-            return _table.Cards.GroupBy(card => card)
+            return Table.Cards.GroupBy(card => card)
                                .Any(group => group.Count() > 1);
         }
 
@@ -80,7 +80,7 @@ namespace RoundGame
 
         public int GetPoints()
         {
-            return _pointsToBeAdded;
+            return PointsToBeAdded;
         }
     }
 }
