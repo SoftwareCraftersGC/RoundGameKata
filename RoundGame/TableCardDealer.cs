@@ -51,9 +51,7 @@ namespace RoundGame
         private void ReplaceRepeated(Card card, int cardPos)
         {
             for (var i = cardPos +1; i < Table.Cards.Count; i++)
-            {
                 if (card.Equals(Table.Cards[i])) ReplaceRepeatedCardAt(i);
-            }
         }
 
         private void ReplaceRepeatedCardAt(int i)
@@ -76,7 +74,6 @@ namespace RoundGame
         {
             return !CardsAreRepeated();
         }
-
 
         public int GetPoints()
         {

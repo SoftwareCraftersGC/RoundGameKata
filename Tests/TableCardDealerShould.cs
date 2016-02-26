@@ -7,7 +7,6 @@ using RoundGame;
 
 namespace Tests
 {
-
     [TestFixture]
     public class TableCardDealerShould
     {
