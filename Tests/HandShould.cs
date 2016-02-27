@@ -1,4 +1,7 @@
-﻿using FluentAssertions;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using FluentAssertions;
 using NUnit.Framework;
 using RoundGame;
 
@@ -37,6 +40,15 @@ namespace Tests
 								new Card(Suit.Hearts, Value.Five));
 			hand.Points.Should().Be(2);
 		}
+
+		[Test]
+		public void have_3_points_for_a_caracol()
+		{
+			var hand = new Hand(new Card(Suit.Clubs, Value.Five),
+								new Card(Suit.Spades, Value.Six),
+								new Card(Suit.Hearts, Value.Seven));
+			hand.Points.Should().Be(3);
+		}
 	}
 
 	public class Hand
@@ -44,13 +56,29 @@ namespace Tests
 		private Card First { get; }
 		private Card Second { get; }
 		private Card Third { get; }
-		public int Points => First.Equals(Second) && Second.Equals(Third) ? 2 : 1;
+		public int Points => CalculatePoints();
+
+		private int CalculatePoints()
+		{
+			if (First.Equals(Second) && Second.Equals(Third))
+				return 2;
+
+			if (First.Value + 1 == Second.Value && Second.Value + 1 == Third.Value)
+				return 3;
+
+			return 1;
+		}
 
 		public Hand(Card first, Card second, Card third)
 		{
 			First = first;
 			Second = second;
 			Third = third;
+		}
+
+		private static List<Value> CardValues()
+		{
+			return Enum.GetValues(typeof(Value)).Cast<Value>().ToList();
 		}
 	}
 }
