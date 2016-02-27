@@ -23,6 +23,15 @@ namespace Tests
 	public class HandShould
 	{
 		[Test]
+		public void have_0_points_for_a_non_special_hand()
+		{
+			var hand = new Hand(new Card(Suit.Clubs, Value.Ace),
+								new Card(Suit.Spades, Value.Three),
+								new Card(Suit.Hearts, Value.Five));
+			hand.Points.Should().Be(0);
+		}
+
+		[Test]
 		public void have_1_point_for_a_ronda()
 		{
 			var first = new Card(Suit.Clubs, Value.Ace);
@@ -66,7 +75,10 @@ namespace Tests
 			if (First.Value + 1 == Second.Value && Second.Value + 1 == Third.Value)
 				return 3;
 
-			return 1;
+			if (First.Equals(Second) || First.Equals(Third) || Second.Equals(Third))
+				return 1;
+
+			return 0;
 		}
 
 		public Hand(Card first, Card second, Card third)
@@ -74,11 +86,6 @@ namespace Tests
 			First = first;
 			Second = second;
 			Third = third;
-		}
-
-		private static List<Value> CardValues()
-		{
-			return Enum.GetValues(typeof(Value)).Cast<Value>().ToList();
 		}
 	}
 }
