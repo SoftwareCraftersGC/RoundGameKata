@@ -15,48 +15,44 @@ namespace Tests
     public class TableCardDealerShould
     {
         private TableCardDealer TableCardDealer { get; set; }
-        private Table Table { get; set; }
         private Deck Deck { get; set; }
 
         [SetUp]
         public void Initialize()
         {
             Deck = Substitute.For<Deck>();
-            Table = new Table();
-            TableCardDealer = new TableCardDealer(Table, Deck);
-        }
+			TableCardDealer = new TableCardDealer(Deck);
+		}
 
-        [Test]
+		[Test]
         public void add_a_point_when_no_card_is_repeated_over_the_table()
         {
 			GivenADeckWithNoRepeatedCards();
-			TableCardDealer = new TableCardDealer(Deck);
 
-	        Table = TableCardDealer.ArrangeTable();
+			var table = TableCardDealer.ArrangeTable();
 
-	        Table.Points.Should().Be(1);
+			table.Points.Should().Be(1);
         }
 
         [Test]
         public void add_points_based_on_card_value_if_the_value_corresponds_to_its_emplacement_order_and_an_extra_one_for_no_repeated_cards()
         {
             GivenADeckWithSucesiveCards();
-			TableCardDealer = new TableCardDealer(Deck);
 
-	        Table = TableCardDealer.ArrangeTable();
+	        var table = TableCardDealer.ArrangeTable();
 
-            Table.Points.Should().Be(11);
+	        table.Points.Should().Be(11);
         }
 
         [Test]
         public void replace_any_repeated_cards_even_if_they_are_repeated_again_when_getting_a_new_one_from_the_deck()
         {
             GivenADeckWithAsMuchRepetitionsAsPossible();
-			TableCardDealer = new TableCardDealer(Deck);
 
-	        Table = TableCardDealer.ArrangeTable();
-            Table.Points.Should().Be(0);
-            Table.Cards.ShouldBeEquivalentTo(ExpectedTable());
+	        var table = TableCardDealer.ArrangeTable();
+
+	        table.Points.Should().Be(0);
+            table.Cards.ShouldBeEquivalentTo(ExpectedTable());
         }
 
         private void GivenADeckWithNoRepeatedCards()
