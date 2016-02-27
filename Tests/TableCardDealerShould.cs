@@ -31,7 +31,7 @@ namespace Tests
         {
 			GivenADeckWithNoRepeatedCards();
 			TableCardDealer = new TableCardDealer(Deck);
-	        Table = TableCardDealer.PutCardsOnTable();
+	        Table = TableCardDealer.ArrangeTable();
 	        Table.Points.Should().Be(1);
         }
 

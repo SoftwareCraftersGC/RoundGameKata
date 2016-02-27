@@ -83,7 +83,7 @@ namespace RoundGame
             return Table.Points;
         }
 
-	    public Table PutCardsOnTable()
+	    public Table ArrangeTable()
 	    {
 			Table = new Table();
 		    PutCards();
