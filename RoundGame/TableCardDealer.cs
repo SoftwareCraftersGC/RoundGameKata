@@ -10,19 +10,14 @@ namespace RoundGame
 		private Table Table { get; set; }
         private Deck Deck { get; }
 
-        public TableCardDealer(Table table, Deck deck)
-        {
-            Table = table;
-            Deck = deck;
-        }
-
 		public TableCardDealer(Deck deck)
 		{
 			Deck = deck;
 		}
 
-		public void PutCards()
+		public Table ArrangeTable()
         {
+			Table = new Table();
             var values = CardValues();
             for (var i = 0; i < MaxCardsOnTable; i++)
             {
@@ -32,6 +27,7 @@ namespace RoundGame
 
             if (NoCardsAreRepeated()) Table.Points += 1;
             else ReplaceRepeatedCards();
+			return Table;
         }
 
         private void ReplaceRepeatedCards()
@@ -82,12 +78,5 @@ namespace RoundGame
         {
             return Table.Points;
         }
-
-	    public Table ArrangeTable()
-	    {
-			Table = new Table();
-		    PutCards();
-		    return Table;
-	    }
     }
 }
