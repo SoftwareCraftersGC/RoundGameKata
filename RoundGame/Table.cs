@@ -12,7 +12,7 @@ namespace RoundGame
             Cards = new List<Card>();
         }
 
-        public void AddCard(Card card)
+        public void Put(Card card)
         {
             Cards.Add(card);
         }

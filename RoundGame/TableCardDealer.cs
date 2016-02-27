@@ -18,19 +18,23 @@ namespace RoundGame
 		public Table ArrangeTable()
         {
 			Table = new Table();
-            var values = CardValues();
-            for (var i = 0; i < MaxCardsOnTable; i++)
-            {
-                Table.AddCard(Deck.GetRandomCard());
-                if (Table.Cards[i].Value == values[i]) Table.Points += (int) values[i];
-            }
-
-            if (NoCardsAreRepeated()) Table.Points += 1;
+            PlaceCards();
+			if (NoCardsAreRepeated()) Table.Points += 1;
             else ReplaceRepeatedCards();
 			return Table;
         }
 
-        private void ReplaceRepeatedCards()
+	    private void PlaceCards()
+	    {
+		    var values = CardValues();
+		    for (var i = 0; i < MaxCardsOnTable; i++)
+		    {
+			    Table.Put(Deck.GetRandomCard());
+			    if (Table.Cards[i].Value == values[i]) Table.Points += (int) values[i];
+		    }
+	    }
+
+	    private void ReplaceRepeatedCards()
         {
             while (CardsAreRepeated())
             {
