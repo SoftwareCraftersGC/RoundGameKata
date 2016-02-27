@@ -4,6 +4,10 @@ using NSubstitute;
 using NUnit.Framework;
 using RoundGame;
 
+/* TODO
+	- Replace TableCardDealer for a CardDealer that returns a valid Table once finished dealing
+	- Extract point calculation behavior from the TableCardDealer
+*/
 
 namespace Tests
 {
@@ -25,9 +29,10 @@ namespace Tests
         [Test]
         public void add_a_point_when_no_card_is_repeated_over_the_table()
         {
-            GivenADeckWithNoRepeatedCards();
-            TableCardDealer.PutCards();
-            TableCardDealer.GetPoints().Should().Be(1);
+			GivenADeckWithNoRepeatedCards();
+			TableCardDealer = new TableCardDealer(Deck);
+	        Table = TableCardDealer.PutCardsOnTable();
+	        Table.Points.Should().Be(1);
         }
 
         [Test]

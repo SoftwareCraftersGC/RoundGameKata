@@ -7,27 +7,30 @@ namespace RoundGame
     public class TableCardDealer
     {
         private const int MaxCardsOnTable = 4;
-        private Table Table { get; }
+		private Table Table { get; set; }
         private Deck Deck { get; }
-        private int PointsToBeAdded { get; set; }
 
         public TableCardDealer(Table table, Deck deck)
         {
             Table = table;
             Deck = deck;
-            PointsToBeAdded = 0;
         }
 
-        public void PutCards()
+		public TableCardDealer(Deck deck)
+		{
+			Deck = deck;
+		}
+
+		public void PutCards()
         {
             var values = CardValues();
             for (var i = 0; i < MaxCardsOnTable; i++)
             {
                 Table.AddCard(Deck.GetRandomCard());
-                if (Table.Cards[i].Value == values[i]) PointsToBeAdded += (int) values[i];
+                if (Table.Cards[i].Value == values[i]) Table.Points += (int) values[i];
             }
 
-            if (NoCardsAreRepeated()) PointsToBeAdded += 1;
+            if (NoCardsAreRepeated()) Table.Points += 1;
             else ReplaceRepeatedCards();
         }
 
@@ -77,7 +80,14 @@ namespace RoundGame
 
         public int GetPoints()
         {
-            return PointsToBeAdded;
+            return Table.Points;
         }
+
+	    public Table PutCardsOnTable()
+	    {
+			Table = new Table();
+		    PutCards();
+		    return Table;
+	    }
     }
 }
