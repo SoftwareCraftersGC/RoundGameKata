@@ -6,7 +6,7 @@ using RoundGame;
 
 
 /* TODO
-	- Replace TableCardDealer for a CardDealer that returns a valid Table once finished dealing
+	- Replace the CardValues method in CardDealer watafak is dat
 	- Extract point calculation behavior from the TableCardDealer
 */
 
