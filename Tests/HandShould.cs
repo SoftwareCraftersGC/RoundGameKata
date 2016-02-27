@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
 using RoundGame;
 
 
 /* TODO
-	- Ronda hand should be 1 point
-	- Parranda hand should be 2 points
-	- Caracol hand should be 3 points
 	- Caracolillo hand should be 4 points
 	- Royal Ronda hand should be 2 points
 	- Royal Parranda hand should be 3 points
