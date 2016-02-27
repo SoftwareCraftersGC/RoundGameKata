@@ -77,10 +77,5 @@ namespace RoundGame
         {
             return !CardsAreRepeated();
         }
-
-        public int GetPoints()
-        {
-            return Table.Points;
-        }
     }
 }
