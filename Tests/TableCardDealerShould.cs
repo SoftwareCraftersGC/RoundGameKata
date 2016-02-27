@@ -31,7 +31,9 @@ namespace Tests
         {
 			GivenADeckWithNoRepeatedCards();
 			TableCardDealer = new TableCardDealer(Deck);
+
 	        Table = TableCardDealer.ArrangeTable();
+
 	        Table.Points.Should().Be(1);
         }
 
@@ -39,16 +41,21 @@ namespace Tests
         public void add_points_based_on_card_value_if_the_value_corresponds_to_its_emplacement_order_and_an_extra_one_for_no_repeated_cards()
         {
             GivenADeckWithSucesiveCards();
-            TableCardDealer.PutCards();
-            TableCardDealer.GetPoints().Should().Be(11);
+			TableCardDealer = new TableCardDealer(Deck);
+
+	        Table = TableCardDealer.ArrangeTable();
+
+            Table.Points.Should().Be(11);
         }
 
         [Test]
         public void replace_any_repeated_cards_even_if_they_are_repeated_again_when_getting_a_new_one_from_the_deck()
         {
             GivenADeckWithAsMuchRepetitionsAsPossible();
-            TableCardDealer.PutCards();
-            TableCardDealer.GetPoints().Should().Be(0);
+			TableCardDealer = new TableCardDealer(Deck);
+
+	        Table = TableCardDealer.ArrangeTable();
+            Table.Points.Should().Be(0);
             Table.Cards.ShouldBeEquivalentTo(ExpectedTable());
         }
 
