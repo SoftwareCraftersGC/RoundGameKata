@@ -1,0 +1,25 @@
+--------------------- First file
+Manos: 
+	- Ronda: 1 pto
+	- Parranda: 2 pto
+	- Caracol: 3 ptos +1 pto (caracolillo) +1 pto (real) Limpiar mesa +1 Majar +1, Contramajo +1, Recontramajo +1 Repatir cartas:
+	- No repetidas +1 pto
+	- +X pto en funcion de la carta en la mesa si coincide con el numero en el que sale
+	- Se cambia la ultima carta repetida hasta que no coincidan ninguna en mesa (si sale el mismo numero en el que tocaba no suma puntos) 4 jugadores A partir de 20 cartas cada carta de mas es 1pto Se recogen cartas en mesa a partir del numero que salga de la sucesion: Ejemplo Hay un 2, 3, 4 en mesa y tiras un 2 recoges los siguientes Para implementar posteiormente Se gana la partida cuando se alcanzan 21 ptos
+
+
+-------------------------- Second file
+- Empezamos partida con 4 jugadores 2 vs 2.
+
+--------- Empieza una ronda 
+	- Se ponen 4 cartas sobre el tablero. Se quita la ultima carta repetida hasta que no coincida ninguna sobre el tablera
+	- El jugador que reparte las cartas empieza por su derecha. Y el orden de jugar será el mismo en el que se reparten
+	- Cuando empezamos una ronda Cada uno con 3 cartas. En este punto se evaluan las manos.
+	- Al principio de cada jugada se evalúa si la anterior ha sido major/contramajo...
+	- Si en la final de una jugada se limpia la mesa se suma un punto al equipo.
+	- Cuando un todos los jugadores gastan sus tres cartas. Empieza una nueva ronda 
+
+-------------- Acaba ronda 
+	- En la última ronda se llevará las cartas sobrantes el último equipo que se llevó carta
+	- Se cuentan las cartas y se suman los puntos obtenidos
+	- Si algún equipo llega a 21 puntos este gana y se acaba la partida. ------------- Acaba el Juego
